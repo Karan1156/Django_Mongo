@@ -8,6 +8,7 @@ asgiref==3.8.1
 attrs==25.3.0
 beautifulsoup4==4.13.3
 bidict==0.23.1
+Flask==2.3.3
 blinker==1.8.2
 certifi==2025.1.31
 charset-normalizer==3.4.1
@@ -24,7 +25,6 @@ django-cloudinary-storage==0.3.0
 djangorestframework==3.16.0
 etelemetry==0.3.1
 filelock==3.18.0
-Flask==3.1.0
 flask-blueprints==0.0.6
 Flask-Login==0.6.3
 Flask-SocketIO==5.5.1
