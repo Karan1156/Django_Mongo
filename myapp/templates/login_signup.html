@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login & Signup Form</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                padding: 20px;
+            }
+
+            .container {
+                position: relative;
+                width: 850px;
+                height: 550px;
+                border-radius: 20px;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+                background: #fff;
+            }
+
+            .form-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                transition: transform 0.6s ease-in-out;
+            }
+
+            .login-container {
+                transform: translateX(0);
+                z-index: 2;
+            }
+
+            .signup-container {
+                transform: translateX(200%);
+                z-index: 3;
+            }
+
+            .container.active .login-container {
+                transform: translateX(-100%);
+            }
+
+            .container.active .signup-container {
+                transform: translateX(100%);
+            }
+
+            .form-box {
+                width: 50%;
+                height: 100%;
+                padding: 50px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .form-box h2 {
+                font-size: 32px;
+                color: #333;
+                margin-bottom: 20px;
+            }
+
+            .form-box p {
+                color: #777;
+                margin-bottom: 30px;
+            }
+
+            .input-box {
+                position: relative;
+                margin-bottom: 20px;
+            }
+
+            .input-box input {
+                width: 100%;
+                padding: 13px 20px 13px 50px;
+                border: none;
+                outline: none;
+                background: #f0f0f0;
+                border-radius: 30px;
+                font-size: 16px;
+                color: #333;
+            }
+
+            .input-box i {
+                position: absolute;
+                left: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #777;
+            }
+
+            .remember-forgot {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+                font-size: 14px;
+            }
+
+            .remember-forgot label {
+                color: #777;
+            }
+
+            .remember-forgot a {
+                color: #667eea;
+                text-decoration: none;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 12px;
+                border: none;
+                outline: none;
+                background: #667eea;
+                color: white;
+                border-radius: 30px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+
+            .btn:hover {
+                background: #5a6fd5;
+            }
+
+            .social-login {
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            .social-login p {
+                margin-bottom: 10px;
+                color: #777;
+            }
+
+            .social-icons {
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .social-icons a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: #f0f0f0;
+                color: #333;
+                text-decoration: none;
+                transition: background 0.3s;
+            }
+
+            .social-icons a:hover {
+                background: #667eea;
+                color: white;
+            }
+
+            .toggle-container {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                width: 50%;
+                height: 100%;
+                overflow: hidden;
+                transition: transform 0.6s ease-in-out;
+                z-index: 1000;
+            }
+
+            .toggle {
+                background: linear-gradient(to right, #667eea, #764ba2);
+                color: white;
+                position: relative;
+                left: -100%;
+                height: 100%;
+                width: 200%;
+                transform: translateX(0);
+                transition: transform 0.6s ease-in-out;
+            }
+
+            .container.active .toggle {
+                transform: translateX(50%);
+            }
+
+            .toggle-panel {
+                position: absolute;
+                width: 50%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 0 40px;
+                text-align: center;
+                top: 0;
+            }
+
+            .toggle-left {
+                transform: translateX(-200%);
+            }
+
+            .toggle-right {
+                right: 0;
+                transform: translateX(0);
+            }
+
+            .container.active .toggle-left {
+                transform: translateX(0);
+            }
+
+            .container.active .toggle-right {
+                transform: translateX(200%);
+            }
+
+            .toggle-btn {
+                padding: 12px 40px;
+                background: transparent;
+                border: 2px solid white;
+                color: white;
+                border-radius: 30px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+
+            .toggle-btn:hover {
+                background: white;
+                color: #667eea;
+            }
+
+            @media (max-width:768px) {
+                .container {
+                    flex-direction: column;
+                    height: auto;
+                    width: 100%;
+                }
+
+                .form-box {
+                    width: 100%;
+                    padding: 30px;
+                }
+
+                .toggle-container {
+                    display: none;
+                }
+            }
+
+            /* By default */
+            .signup-container {
+                transform: translateX(100%);
+                z-index: 1;
+                transition: transform 0.6s ease-in-out;
+            }
+
+            /* When container is active */
+            .container.active .signup-container {
+                transform: translateX(0);
+                /* <-- Fix: bring it into view */
+                z-index: 2;
+            }
+
+            .login-container,
+            .signup-container {
+                transition: transform 0.6s ease-in-out;
+            }
+
+            .login-container,
+            .signup-container {
+                width: 100%;
+                transition: opacity 0.4s ease-in-out;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+            .signup-container {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .container.active .login-container {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .container.active .signup-container {
+                opacity: 1;
+                pointer-events: all;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container" id="container">
+            <!-- Login -->
+            <div class="form-container login-container">
+                <div class="form-box">
+                    <h2>Login</h2>
+                    <p>Welcome back! Please login to your account.</p>
+                    <form method="POST" action="{% url 'login'%}">
+                        {%csrf_token%}
+                        <div class="input-box">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-box">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="password" placeholder="Password" required>
+                        </div>
+                        <div class="remember-forgot">
+                            <label><input type="checkbox"> Remember me</label>
+                            <a href="/forgot">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="btn">Login</button>
+                    </form>
+                    <div class="social-login">
+                        <p>Or login with</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-google"></i></a>
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Signup -->
+            <div class="form-container signup-container">
+                <div class="form-box">
+                    <h2>Create Account</h2>
+                    <p>Enter your details to create your account.</p>
+                    <form method="POST" action="{% url 'signup'%}" onsubmit="return validateSignup()">
+                        {%csrf_token%}
+                        <div class="input-box">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" name="name" required>
+                        </div>
+                        <div class="input-box">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-box">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="password" id="password" placeholder="Password" required>
+                        </div>
+                        <div class="input-box">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="confirm" placeholder="Confirm Password" required>
+                        </div>
+                        <button type="submit" class="btn">Sign Up</button>
+                    </form>
+                    <div class="social-login">
+                        <p>Or sign up with</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-google"></i></a>
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toggle -->
+            <div class="toggle-container">
+                <div class="toggle">
+                    <div class="toggle-panel toggle-left">
+                        <h2>Welcome Back!</h2>
+                        <p>Enter your personal details to use all site features</p>
+                        <button class="toggle-btn" id="login">Sign In</button>
+                    </div>
+                    <div class="toggle-panel toggle-right">
+                        <h2>Hello, Friend!</h2>
+                        <p>Register with your personal details to use all site features</p>
+                        <button class="toggle-btn" id="register">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const container = document.getElementById('container');
+            const registerBtn = document.getElementById('register');
+            const loginBtn = document.getElementById('login');
+
+            registerBtn.addEventListener('click', () => container.classList.add('active'));
+            loginBtn.addEventListener('click', () => container.classList.remove('active'));
+
+            // validate signup
+            function validateSignup() {
+                const pass = document.getElementById('password').value;
+                const confirm = document.getElementById('confirm').value;
+                if (pass !== confirm) {
+                    alert("Passwords do not match!");
+                    return false;
+                }
+                return true;
+            }
+        </script>
+    </body>
+
+</html>

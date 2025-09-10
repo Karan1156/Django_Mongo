@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Home page</h1><h2><a href="{% url 'logout' %}">Logout</a></h2>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="task" placeholder="Enter Task">
+        <input type="submit" value="Add Task">
+    </form>
+    <br>
+
+    {% for task in tasks %}
+    <li>{{task.task}} <a href="{%url 'del' task.id %}">DELETE</a> <a href="{%url 'update' task.id%}">Update</a></li>
+    {% endfor %}
+</body>
+</html>
